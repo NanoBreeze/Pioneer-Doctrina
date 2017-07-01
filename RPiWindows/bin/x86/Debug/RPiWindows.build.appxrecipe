@@ -9,16 +9,16 @@
     <SolutionConfiguration>Debug|x86</SolutionConfiguration>
     <PackageArchitecture>x86</PackageArchitecture>
     <PackageIdentityName>39cf80ce-c9c0-4d8f-a6af-8c67f514b825</PackageIdentityName>
-    <IntermediateOutputPath>c:\users\lenny\documents\visual studio 2015\Projects\RPiWindows\RPiWindows\obj\x86\Debug\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\Users\Lenny\Documents\Visual Studio 2015\Projects\RPiWindows\RPiWindows\obj\x86\Debug\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <AppXManifest Include="c:\users\lenny\documents\visual studio 2015\Projects\RPiWindows\RPiWindows\bin\x86\Debug\Core\AppxManifest.xml">
+    <AppXManifest Include="C:\Users\Lenny\Documents\Visual Studio 2015\Projects\RPiWindows\RPiWindows\bin\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
-    <AppxPackagedFile Include="c:\users\lenny\documents\visual studio 2015\Projects\RPiWindows\RPiWindows\bin\x86\Debug\RPiWindows.exe">
+    <AppxPackagedFile Include="C:\Users\Lenny\Documents\Visual Studio 2015\Projects\RPiWindows\RPiWindows\bin\x86\Debug\RPiWindows.exe">
       <PackagePath>entrypoint\RPiWindows.exe</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Lenny\.nuget\packages\Microsoft.CSharp\4.0.0\lib\netcore50\Microsoft.CSharp.dll">
@@ -330,46 +330,46 @@
     <AppxPackagedFile Include="C:\Users\Lenny\.nuget\packages\System.Xml.XmlSerializer\4.0.10\lib\netcore50\System.Xml.XmlSerializer.dll">
       <PackagePath>System.Xml.XmlSerializer.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="c:\users\lenny\documents\visual studio 2015\Projects\RPiWindows\RPiWindows\Properties\Default.rd.xml">
+    <AppxPackagedFile Include="C:\Users\Lenny\Documents\Visual Studio 2015\Projects\RPiWindows\RPiWindows\Properties\Default.rd.xml">
       <PackagePath>Properties\Default.rd.xml</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="c:\users\lenny\documents\visual studio 2015\Projects\RPiWindows\RPiWindows\Assets\LockScreenLogo.scale-200.png">
+    <AppxPackagedFile Include="C:\Users\Lenny\Documents\Visual Studio 2015\Projects\RPiWindows\RPiWindows\Assets\LockScreenLogo.scale-200.png">
       <PackagePath>Assets\LockScreenLogo.scale-200.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="c:\users\lenny\documents\visual studio 2015\Projects\RPiWindows\RPiWindows\Assets\SplashScreen.scale-200.png">
+    <AppxPackagedFile Include="C:\Users\Lenny\Documents\Visual Studio 2015\Projects\RPiWindows\RPiWindows\Assets\SplashScreen.scale-200.png">
       <PackagePath>Assets\SplashScreen.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="c:\users\lenny\documents\visual studio 2015\Projects\RPiWindows\RPiWindows\Assets\Square150x150Logo.scale-200.png">
+    <AppxPackagedFile Include="C:\Users\Lenny\Documents\Visual Studio 2015\Projects\RPiWindows\RPiWindows\Assets\Square150x150Logo.scale-200.png">
       <PackagePath>Assets\Square150x150Logo.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="c:\users\lenny\documents\visual studio 2015\Projects\RPiWindows\RPiWindows\Assets\Square44x44Logo.scale-200.png">
+    <AppxPackagedFile Include="C:\Users\Lenny\Documents\Visual Studio 2015\Projects\RPiWindows\RPiWindows\Assets\Square44x44Logo.scale-200.png">
       <PackagePath>Assets\Square44x44Logo.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="c:\users\lenny\documents\visual studio 2015\Projects\RPiWindows\RPiWindows\Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
+    <AppxPackagedFile Include="C:\Users\Lenny\Documents\Visual Studio 2015\Projects\RPiWindows\RPiWindows\Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
       <PackagePath>Assets\Square44x44Logo.targetsize-24_altform-unplated.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="c:\users\lenny\documents\visual studio 2015\Projects\RPiWindows\RPiWindows\Assets\StoreLogo.png">
+    <AppxPackagedFile Include="C:\Users\Lenny\Documents\Visual Studio 2015\Projects\RPiWindows\RPiWindows\Assets\StoreLogo.png">
       <PackagePath>Assets\StoreLogo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="c:\users\lenny\documents\visual studio 2015\Projects\RPiWindows\RPiWindows\Assets\Wide310x150Logo.scale-200.png">
+    <AppxPackagedFile Include="C:\Users\Lenny\Documents\Visual Studio 2015\Projects\RPiWindows\RPiWindows\Assets\Wide310x150Logo.scale-200.png">
       <PackagePath>Assets\Wide310x150Logo.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="c:\users\lenny\documents\visual studio 2015\Projects\RPiWindows\RPiWindows\bin\x86\Debug\RPiWindows.xr.xml">
+    <AppxPackagedFile Include="C:\Users\Lenny\Documents\Visual Studio 2015\Projects\RPiWindows\RPiWindows\bin\x86\Debug\RPiWindows.xr.xml">
       <PackagePath>RPiWindows.xr.xml</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\UnionMetadata\Windows.winmd">
       <PackagePath>WinMetadata\Windows.winmd</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="c:\users\lenny\documents\visual studio 2015\Projects\RPiWindows\RPiWindows\bin\x86\Debug\resources.pri">
+    <AppxPackagedFile Include="C:\Users\Lenny\Documents\Visual Studio 2015\Projects\RPiWindows\RPiWindows\bin\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="c:\users\lenny\documents\visual studio 2015\Projects\RPiWindows\RPiWindows\bin\x86\Debug\Core\RPiWindows.exe">
+    <AppxPackagedFile Include="C:\Users\Lenny\Documents\Visual Studio 2015\Projects\RPiWindows\RPiWindows\bin\x86\Debug\Core\RPiWindows.exe">
       <PackagePath>RPiWindows.exe</PackagePath>
     </AppxPackagedFile>
   </ItemGroup>

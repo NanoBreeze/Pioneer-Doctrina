@@ -1,0 +1,15 @@
+# User-specific files
+RPiWindows/*.suo
+RPiWindows/*.user
+RPiWindows/*.sln.docstates
+
+# Build results
+RPiWindows/[Dd]ebug/
+RPiWindows/[Rr]elease/
+RPiWindows/x64/
+RPiWindows/build/
+RPiWindows/[Bb]in/
+RPiWindows/[Oo]bj/
+
+RPiWindows/project.lock.json
+RPiWindows/*.pfx

@@ -21,7 +21,7 @@
             <StackPanel Grid.Row="1" Orientation="Vertical">
                 <StackPanel Orientation="Horizontal">
                     <Image MinWidth="80" MinHeight="50"/>
-                    <TextBlock Text="Hello there!" />
+                    <TextBlock x:Name="tbkConnectionStatus" Text="Hello there!" />
                 </StackPanel>
                 <TextBlock Text="Connect to IP address: "></TextBlock>
                 <TextBox></TextBox>
@@ -42,8 +42,8 @@
                     <ColumnDefinition Width="163*" />
                 </Grid.ColumnDefinitions>
 
-                <ToggleSwitch HorizontalAlignment="Right" Margin="0,42,3.667,42" Grid.Column="0" Header="Camera Status" Height="60" Width="154"></ToggleSwitch>
-                <Button HorizontalAlignment="Left" Grid.Column="1" Content="Capture Picture!" Height="32" Margin="0.333,56,0,56" Width="126"></Button>
+                <ToggleSwitch x:Name="tsCamera" HorizontalAlignment="Right" Margin="0,42,3.667,42" Grid.Column="0" Header="Camera Status" Height="60" Width="154" Toggled="tsCamera_Toggled"></ToggleSwitch>
+                <Button x:Name="btnCamera" HorizontalAlignment="Left" Grid.Column="1" Content="Capture Picture!" Height="32" Margin="0.333,56,0,56" Width="126"></Button>
             </Grid>
         </Grid>
     </Grid>

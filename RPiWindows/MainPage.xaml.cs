@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -13,6 +14,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
+
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace RPiWindows
@@ -24,7 +26,25 @@ namespace RPiWindows
     {
         public MainPage()
         {
+            
             this.InitializeComponent();
+        }
+
+        private async void tsCamera_Toggled(object sender, RoutedEventArgs e)
+        {
+            Network.SendUDP("127.0.0.1", "1337");
+            ToggleSwitch tsCamera = sender as ToggleSwitch;
+            Debug.Assert(tsCamera != null);
+
+            // Is it possible to define a state for the camera button and simply change its state here instead of going into the implementation details?
+            if (tsCamera.IsOn)
+            {
+                btnCamera.IsEnabled = true;
+            }
+            else
+            {
+                btnCamera.IsEnabled = false;
+            }
         }
     }
 }
