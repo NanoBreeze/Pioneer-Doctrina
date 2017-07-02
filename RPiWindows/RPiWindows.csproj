@@ -96,8 +96,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controllers\CameraController.cs" />
+    <Compile Include="Controllers\IController.cs" />
+    <Compile Include="KeyHandler.cs" />
     <Compile Include="Controllers\MovementController.cs" />
-    <Compile Include="Controllers\RPiConnectionController.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

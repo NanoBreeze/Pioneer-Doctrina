@@ -12,19 +12,27 @@
             <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
+
         <Grid Grid.Column ="0" Background="Aqua">
             <Grid.RowDefinitions>
-                <RowDefinition Height="3*" />
-                <RowDefinition Height="2*" />
+                <RowDefinition Height="1*" /> <!-- Margin space at top -->
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="5*" />
             </Grid.RowDefinitions>
-            <Image Grid.Row="0" VerticalAlignment="Center"  HorizontalAlignment="Left" />
-            <StackPanel Grid.Row="1" Orientation="Vertical">
-                <StackPanel Orientation="Horizontal">
-                    <Image MinWidth="80" MinHeight="50"/>
-                    <TextBlock x:Name="tbkConnectionStatus" Text="Hello there!" />
-                </StackPanel>
-                <TextBlock Text="Connect to IP address: "></TextBlock>
-                <TextBox></TextBox>
+            <Rectangle Grid.Row="1" Fill="Orange" Width="50"/>
+            <Rectangle Grid.Row="2" Fill="Orange" Width="50" HorizontalAlignment="Left"></Rectangle>
+            <Rectangle Grid.Row="2" Fill="Orange" Width="50" HorizontalAlignment="Right"></Rectangle>
+            <Rectangle Grid.Row="3" Fill="Orange" Width="50"></Rectangle>
+            <StackPanel VerticalAlignment="Center" Grid.Row="4" Orientation="Vertical">
+                <TextBox x:Name="tbxIpAddress" Header="Set Destination address:port" ></TextBox>
+                <Grid>
+                <TextBlock x:Name="tbkErrorMsg" HorizontalAlignment="Left" Foreground="Red" Visibility="Collapsed">Invalid format</TextBlock>
+                <Button x:Name="btnIpAddress" HorizontalAlignment="Right" Margin="5,0,0,10" Click="btnIpAddress_Click">Set</Button>
+                </Grid>
+                <TextBlock Text="Current Destination address:port"></TextBlock>
+                <TextBlock x:Name="tbkIpAddress" FontSize="20" Foreground="ForestGreen"></TextBlock>
             </StackPanel>
 
 
@@ -37,13 +45,7 @@
             </Grid.RowDefinitions>
             <Image Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Image>
             <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="264*" />
-                    <ColumnDefinition Width="163*" />
-                </Grid.ColumnDefinitions>
-
-                <ToggleSwitch x:Name="tsCamera" HorizontalAlignment="Right" Margin="0,42,3.667,42" Grid.Column="0" Header="Camera Status" Height="60" Width="154" Toggled="tsCamera_Toggled"></ToggleSwitch>
-                <Button x:Name="btnCamera" HorizontalAlignment="Left" Grid.Column="1" Content="Capture Picture!" Height="32" Margin="0.333,56,0,56" Width="126"></Button>
+                <Button x:Name="btnCamera" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Content="Capture Picture!" Click="btnCamera_Click"></Button>
             </Grid>
         </Grid>
     </Grid>
