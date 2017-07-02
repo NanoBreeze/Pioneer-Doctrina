@@ -4,14 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Gaming.Input;
+using RPiWindows.Models;
 
 namespace RPiWindows.Controllers
 {
-    class MovementController : IController 
+    class MovementController
     {
-        private string ipAddress;
-        private string port;
-
         // WASD, for forward, left, back, right. 
         // qezx for foward left, forward right, backward left, and backward right
         const string DRIVE_FORWARD = "W";
@@ -23,86 +21,63 @@ namespace RPiWindows.Controllers
         const string TURN_LEFT = "A";
         const string TURN_RIGHT = "D";
 
-        public void HandleNavigation(bool isTurningLeft, bool isTurningRight, bool isDrivingForward,
-            bool isDrivingBackward)
+
+        public MovementController()
         {
+        }
+
+        public void MonitorForMovement()
+        {
+            while (true)
+            {
+                HandleNavigation(
+                    MovementFlags.Instance.IsTurningLeft,
+                    MovementFlags.Instance.IsTurningRight,
+                    MovementFlags.Instance.IsDrivingForward,
+                    MovementFlags.Instance.IsDrivingBackward
+                );
+            }
+        }
+
+
+
+        private void HandleNavigation(bool isTurningLeft, bool isTurningRight, bool isDrivingForward, bool isDrivingBackward)
+        {
+            string ipAddress = NetworkInfo.Instance.IpAddress;
+            string port = NetworkInfo.Instance.Port;
+
             if (isDrivingForward && isTurningLeft)
             {
-                DriveForwardLeft();
+                Network.SendUDP(ipAddress, port, DRIVE_FORWARD_LEFT);
             }
             else if (isDrivingForward && isTurningRight)
             {
-                DriveForwardRight();
+                Network.SendUDP(ipAddress, port, DRIVE_FORWARD_RIGHT);
             }
             else if (isDrivingBackward && isTurningLeft)
             {
-                DriveBackwardLeft();
+                Network.SendUDP(ipAddress, port, DRIVE_BACKWARD_LEFT);
             }
             else if (isDrivingBackward && isTurningRight)
             {
-                DriveBackwardRight();
+                Network.SendUDP(ipAddress, port, DRIVE_BACKWARD_RIGHT);
             }
             else if (isDrivingForward)
             {
-                DriveForward();
+                Network.SendUDP(ipAddress, port, DRIVE_FORWARD);
             }
             else if (isDrivingBackward)
             {
-                DriveBackward();
+                Network.SendUDP(ipAddress, port, DRIVE_BACKWARD);
             }
             else if (isTurningLeft)
             {
-                TurnLeft();
+                Network.SendUDP(ipAddress, port, TURN_LEFT);
             }
-            else
+            else if (isTurningRight)
             {
-                TurnRight();
+                Network.SendUDP(ipAddress, port, TURN_RIGHT);
             }
-        }
-
-        private void DriveForward()
-        {
-            Network.SendUDP(ipAddress, port, DRIVE_FORWARD);
-        }
-
-        private void DriveBackward()
-        {
-            Network.SendUDP(ipAddress, port, DRIVE_BACKWARD);
-        }
-
-        private void TurnLeft()
-        {
-            Network.SendUDP(ipAddress, port, TURN_LEFT);
-        }
-
-        private void TurnRight()
-        {
-            Network.SendUDP(ipAddress, port, TURN_RIGHT);
-        }
-
-        private void DriveForwardLeft()
-        {
-            Network.SendUDP(ipAddress, port, DRIVE_FORWARD_LEFT);
-        }
-
-        private void DriveForwardRight()
-        {
-            Network.SendUDP(ipAddress, port, DRIVE_FORWARD_RIGHT);
-        }
-
-        private void DriveBackwardLeft()
-        {
-            Network.SendUDP(ipAddress, port, DRIVE_BACKWARD_LEFT);
-        }
-        private void DriveBackwardRight()
-        {
-            Network.SendUDP(ipAddress, port, DRIVE_BACKWARD_RIGHT);
-        }
-
-        public void OnDestinationAddressPortChange(string ipAddress, string port)
-        {
-            this.ipAddress = ipAddress;
-            this.port = port;
         }
     }
 }

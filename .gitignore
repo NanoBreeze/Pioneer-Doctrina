@@ -13,3 +13,5 @@ RPiWindows/[Oo]bj/*
 
 RPiWindows/project.lock.json
 RPiWindows/*.pfx
+
+.vs/*

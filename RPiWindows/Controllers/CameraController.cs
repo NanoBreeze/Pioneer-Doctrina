@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RPiWindows.Controllers
 {
-    class CameraController : IController
+    class CameraController 
     {
         private string ipAddress;
         private string port;

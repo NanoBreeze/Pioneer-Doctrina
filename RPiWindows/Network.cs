@@ -40,6 +40,7 @@ namespace RPiWindows
             StreamWriter writer = new StreamWriter(streamOut);
             await writer.WriteLineAsync(message);
             await writer.FlushAsync();
+            Debug.Write(message);
         }
     }
 }

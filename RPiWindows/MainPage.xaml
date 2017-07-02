@@ -21,10 +21,10 @@
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="5*" />
             </Grid.RowDefinitions>
-            <Rectangle Grid.Row="1" Fill="Orange" Width="50"/>
-            <Rectangle Grid.Row="2" Fill="Orange" Width="50" HorizontalAlignment="Left"></Rectangle>
-            <Rectangle Grid.Row="2" Fill="Orange" Width="50" HorizontalAlignment="Right"></Rectangle>
-            <Rectangle Grid.Row="3" Fill="Orange" Width="50"></Rectangle>
+            <Rectangle x:Name="recForward" Grid.Row="1" Fill="Orange" Width="50"/>
+            <Rectangle x:Name="recLeft" Grid.Row="2" Fill="Orange" Width="50" HorizontalAlignment="Left"></Rectangle>
+            <Rectangle x:Name="recRight" Grid.Row="2" Fill="Orange" Width="50" HorizontalAlignment="Right"></Rectangle>
+            <Rectangle x:Name="recBackward" Grid.Row="3" Fill="Orange" Width="50"></Rectangle>
             <StackPanel VerticalAlignment="Center" Grid.Row="4" Orientation="Vertical">
                 <TextBox x:Name="tbxIpAddress" Header="Set Destination address:port" ></TextBox>
                 <Grid>
