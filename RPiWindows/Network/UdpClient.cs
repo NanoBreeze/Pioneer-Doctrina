@@ -7,12 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Networking;
 using Windows.Networking.Sockets;
+using RPiWindows.Network;
 
 namespace RPiWindows
 {
-    class Network
+    class UdpClient : IClient
     {
-        public static async void SendUDP(string destIpAddress, string destPort, string message)
+        public async void Send(string destIpAddress, string destPort, string message)
         {
             // Using UDP not for any particular reason, though if going into prod, use TCP
             DatagramSocket socket = new DatagramSocket();

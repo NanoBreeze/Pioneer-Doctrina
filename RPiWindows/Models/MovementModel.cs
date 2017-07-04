@@ -10,12 +10,12 @@ namespace RPiWindows.Models
     /// <summary>
     /// Thread-safe singleton
     /// </summary>
-    class MovementFlags
+    class MovementModel
     {
-        private static MovementFlags instance = null;
+        private static MovementModel instance = null;
         private static readonly object padlock = new object();
 
-        private MovementFlags()
+        private MovementModel()
         {
             IsDrivingForward = false;
             IsDrivingBackward = false;
@@ -23,7 +23,7 @@ namespace RPiWindows.Models
             IsTurningRight = false;
         }
 
-        public static MovementFlags Instance
+        public static MovementModel Instance
         {
             get
             {
@@ -31,7 +31,7 @@ namespace RPiWindows.Models
                 {
                     if (instance == null)
                     {
-                        instance = new MovementFlags();
+                        instance = new MovementModel();
                     }
                     return instance;
                 }

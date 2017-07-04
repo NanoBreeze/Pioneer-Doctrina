@@ -6,6 +6,8 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Windows.Devices.Bluetooth;
+using Windows.Devices.Enumeration;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.System;
@@ -21,6 +23,8 @@ using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
 using RPiWindows.Controllers;
 using RPiWindows.Models;
+using System.Diagnostics;
+using RPiWindows.Network;
 
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -68,8 +72,8 @@ namespace RPiWindows
                 string ipAddress = ipAndPort.Split(':')[0];
                 string port = ipAndPort.Split(':')[1];
 
-                NetworkInfo.Instance.IpAddress = ipAddress;
-                NetworkInfo.Instance.Port = port;
+                NetworkModel.Instance.IpAddress = ipAddress;
+                NetworkModel.Instance.Port = port;
 
                 tbkErrorMsg.Visibility = Visibility.Collapsed;
                 tbkIpAddress.Text = ipAndPort;
@@ -125,7 +129,45 @@ namespace RPiWindows
             recLeft.Fill = new SolidColorBrush(Colors.Orange);
         }
 
+        private bool IsValidIpAndPort(string ipAndPort)
+        {
+            bool isValid = Regex.IsMatch(ipAndPort, @"[0-9]+(?:\.[0-9]+){3}:[0-9]+$");
 
+            return isValid;
+        }
 
+        private void btnUseTCP_Click(object sender, RoutedEventArgs e)
+        {
+            string ipAndPort = tbxIpAddress.Text;
+            if (IsValidIpAndPort(ipAndPort))
+            {
+                string ipAddress = ipAndPort.Split(':')[0];
+                string port = ipAndPort.Split(':')[1];
+
+                NetworkModel.Instance.IpAddress = ipAddress;
+                NetworkModel.Instance.Port = port;
+                NetworkModel.Instance.NetworkClient = new UdpClient(); // Why create new instance each time? Can optimize to not create new instance
+
+                btnUseTCP.Background = new SolidColorBrush(Colors.Green);
+                btnUseRFCOMM.Background = new SolidColorBrush(Colors.Orange);
+
+                tbkErrorMsg.Visibility = Visibility.Collapsed;
+                tbkIpAddress.Text = ipAndPort;
+            }
+            else
+            {
+                tbkErrorMsg.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void btnUseRFCOMM_Click(object sender, RoutedEventArgs e)
+        {
+            btnUseRFCOMM.Background = new SolidColorBrush(Colors.Green);
+            btnUseTCP.Background = new SolidColorBrush(Colors.Orange);
+
+            NetworkModel.Instance.IpAddress = "127.0.0.1";
+            NetworkModel.Instance.Port = "10001";
+            NetworkModel.Instance.NetworkClient = new RfcommClient(); // Why create new instance each time? Can optimize to not create new instance
+        }
     }
 }

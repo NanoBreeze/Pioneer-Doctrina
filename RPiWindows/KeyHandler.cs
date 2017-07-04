@@ -41,26 +41,26 @@ namespace RPiWindows.Controllers
                     throw new NotImplementedException();
                     return;
                 case TURN_LEFT:
-                    MovementFlags.Instance.IsTurningLeft = true;
-                    MovementFlags.Instance.IsTurningRight= false;
+                    MovementModel.Instance.IsTurningLeft = true;
+                    MovementModel.Instance.IsTurningRight= false;
                     mainPage.ShowLeftGraphic();
                     mainPage.ShowStopRightGraphic();
                     break;
                 case TURN_RIGHT:
-                    MovementFlags.Instance.IsTurningRight= true;
-                    MovementFlags.Instance.IsTurningLeft = false;
+                    MovementModel.Instance.IsTurningRight= true;
+                    MovementModel.Instance.IsTurningLeft = false;
                     mainPage.ShowRightGraphic();
                     mainPage.ShowStopLeftGraphic();
                     break;
                 case DRIVE_FORWARD:
-                    MovementFlags.Instance.IsDrivingForward = true;
-                    MovementFlags.Instance.IsDrivingBackward = false;
+                    MovementModel.Instance.IsDrivingForward = true;
+                    MovementModel.Instance.IsDrivingBackward = false;
                     mainPage.ShowForwardGraphic();
                     mainPage.ShowStopBackwardGraphic();
                     break;
                 case DRIVE_BACKWARD:
-                    MovementFlags.Instance.IsDrivingBackward = true;
-                    MovementFlags.Instance.IsDrivingForward = false;
+                    MovementModel.Instance.IsDrivingBackward = true;
+                    MovementModel.Instance.IsDrivingForward = false;
                     mainPage.ShowBackwardGraphic();
                     mainPage.ShowStopForwardGraphic();
                     break;
@@ -72,19 +72,19 @@ namespace RPiWindows.Controllers
             switch (key)
             {
                 case TURN_LEFT:
-                    MovementFlags.Instance.IsTurningLeft = false;
+                    MovementModel.Instance.IsTurningLeft = false;
                     mainPage.ShowStopLeftGraphic();
                     break;
                 case TURN_RIGHT:
-                    MovementFlags.Instance.IsTurningRight = false;
+                    MovementModel.Instance.IsTurningRight = false;
                     mainPage.ShowStopRightGraphic();
                     break;
                 case DRIVE_FORWARD:
-                    MovementFlags.Instance.IsDrivingForward = false;
+                    MovementModel.Instance.IsDrivingForward = false;
                     mainPage.ShowStopForwardGraphic();
                     break;
                 case DRIVE_BACKWARD:
-                    MovementFlags.Instance.IsDrivingBackward = false;
+                    MovementModel.Instance.IsDrivingBackward = false;
                     mainPage.ShowStopBackwardGraphic();
                     break;
             }

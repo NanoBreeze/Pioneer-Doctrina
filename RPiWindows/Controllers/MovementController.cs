@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Gaming.Input;
 using RPiWindows.Models;
+using RPiWindows.Network;
 
 namespace RPiWindows.Controllers
 {
@@ -31,52 +32,51 @@ namespace RPiWindows.Controllers
             while (true)
             {
                 HandleNavigation(
-                    MovementFlags.Instance.IsTurningLeft,
-                    MovementFlags.Instance.IsTurningRight,
-                    MovementFlags.Instance.IsDrivingForward,
-                    MovementFlags.Instance.IsDrivingBackward
+                    MovementModel.Instance.IsTurningLeft,
+                    MovementModel.Instance.IsTurningRight,
+                    MovementModel.Instance.IsDrivingForward,
+                    MovementModel.Instance.IsDrivingBackward
                 );
             }
         }
 
-
-
         private void HandleNavigation(bool isTurningLeft, bool isTurningRight, bool isDrivingForward, bool isDrivingBackward)
         {
-            string ipAddress = NetworkInfo.Instance.IpAddress;
-            string port = NetworkInfo.Instance.Port;
+            string ipAddress = NetworkModel.Instance.IpAddress;
+            string port = NetworkModel.Instance.Port;
+            IClient networkClient = NetworkModel.Instance.NetworkClient;
 
             if (isDrivingForward && isTurningLeft)
             {
-                Network.SendUDP(ipAddress, port, DRIVE_FORWARD_LEFT);
+                networkClient.Send(ipAddress, port, DRIVE_FORWARD_LEFT);
             }
             else if (isDrivingForward && isTurningRight)
             {
-                Network.SendUDP(ipAddress, port, DRIVE_FORWARD_RIGHT);
+                networkClient.Send(ipAddress, port, DRIVE_FORWARD_RIGHT);
             }
             else if (isDrivingBackward && isTurningLeft)
             {
-                Network.SendUDP(ipAddress, port, DRIVE_BACKWARD_LEFT);
+                networkClient.Send(ipAddress, port, DRIVE_BACKWARD_LEFT);
             }
             else if (isDrivingBackward && isTurningRight)
             {
-                Network.SendUDP(ipAddress, port, DRIVE_BACKWARD_RIGHT);
+                networkClient.Send(ipAddress, port, DRIVE_BACKWARD_RIGHT);
             }
             else if (isDrivingForward)
             {
-                Network.SendUDP(ipAddress, port, DRIVE_FORWARD);
+                networkClient.Send(ipAddress, port, DRIVE_FORWARD);
             }
             else if (isDrivingBackward)
             {
-                Network.SendUDP(ipAddress, port, DRIVE_BACKWARD);
+                networkClient.Send(ipAddress, port, DRIVE_BACKWARD);
             }
             else if (isTurningLeft)
             {
-                Network.SendUDP(ipAddress, port, TURN_LEFT);
+                networkClient.Send(ipAddress, port, TURN_LEFT);
             }
             else if (isTurningRight)
             {
-                Network.SendUDP(ipAddress, port, TURN_RIGHT);
+                networkClient.Send(ipAddress, port, TURN_RIGHT);
             }
         }
     }

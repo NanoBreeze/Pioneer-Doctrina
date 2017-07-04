@@ -15,7 +15,8 @@
 
         <Grid Grid.Column ="0" Background="Aqua">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*" /> <!-- Margin space at top -->
+                <RowDefinition Height="1*" />
+                <!-- Margin space at top -->
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="1*" />
@@ -28,16 +29,18 @@
             <StackPanel VerticalAlignment="Center" Grid.Row="4" Orientation="Vertical">
                 <TextBox x:Name="tbxIpAddress" Header="Set Destination address:port" ></TextBox>
                 <Grid>
-                <TextBlock x:Name="tbkErrorMsg" HorizontalAlignment="Left" Foreground="Red" Visibility="Collapsed">Invalid format</TextBlock>
-                <Button x:Name="btnIpAddress" HorizontalAlignment="Right" Margin="5,0,0,10" Click="btnIpAddress_Click">Set</Button>
+                    <TextBlock x:Name="tbkErrorMsg" HorizontalAlignment="Left" Foreground="Red" Visibility="Collapsed">Invalid format</TextBlock>
                 </Grid>
                 <TextBlock Text="Current Destination address:port"></TextBlock>
                 <TextBlock x:Name="tbkIpAddress" FontSize="20" Foreground="ForestGreen"></TextBlock>
+                <Grid>
+                    <Button x:Name="btnUseTCP" HorizontalAlignment="Left" Click="btnUseTCP_Click">Use TCP/IP</Button>
+                    <Button x:Name="btnUseRFCOMM" HorizontalAlignment="Right" Click="btnUseRFCOMM_Click">Use RFCOMM</Button>
+                </Grid>
             </StackPanel>
-
-
-
         </Grid>
+
+        
         <Grid Grid.Column="1" Background="Blue">
             <Grid.RowDefinitions>
                 <RowDefinition Height="3*" />

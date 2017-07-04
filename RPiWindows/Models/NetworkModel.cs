@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RPiWindows.Network;
 
 namespace RPiWindows.Models
 {
-    class NetworkInfo
+    class NetworkModel
     {
-        private static NetworkInfo instance = null;
+        private static NetworkModel instance = null;
         private static readonly object padlock = new object();
 
-        private NetworkInfo()
+        private NetworkModel()
         {
         }
 
-        public static NetworkInfo Instance
+        public static NetworkModel Instance
         {
             get
             {
@@ -23,7 +24,7 @@ namespace RPiWindows.Models
                 {
                     if (instance == null)
                     {
-                        instance = new NetworkInfo();
+                        instance = new NetworkModel();
                     }
                     return instance;
                 }
@@ -32,6 +33,7 @@ namespace RPiWindows.Models
 
         public string IpAddress { get; set; }
         public string Port { get; set; }
+        public IClient NetworkClient { get; set; }
     }
 }
 

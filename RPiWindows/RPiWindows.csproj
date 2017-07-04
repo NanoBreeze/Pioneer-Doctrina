@@ -101,9 +101,11 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\MovementFlags.cs" />
-    <Compile Include="Models\NetworkInfo.cs" />
-    <Compile Include="Network.cs" />
+    <Compile Include="Models\MovementModel.cs" />
+    <Compile Include="Models\NetworkModel.cs" />
+    <Compile Include="Network\IClient.cs" />
+    <Compile Include="Network\RfcommClient.cs" />
+    <Compile Include="Network\UdpClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
