@@ -15,3 +15,8 @@ RPiWindows/project.lock.json
 RPiWindows/*.pfx
 
 .vs/*
+
+# Raspberry Pi
+RPi/*.swp
+RPi/*.bak
+RPi/*.swo
