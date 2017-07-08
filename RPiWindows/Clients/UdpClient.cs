@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Networking;
 using Windows.Networking.Sockets;
-using RPiWindows.Network;
 
-namespace RPiWindows
+namespace RPiWindows.Clients
 {
     class UdpClient : IClient
     {

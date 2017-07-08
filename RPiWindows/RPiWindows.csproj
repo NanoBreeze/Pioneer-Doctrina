@@ -103,10 +103,11 @@
     </Compile>
     <Compile Include="Models\MovementModel.cs" />
     <Compile Include="Models\NetworkModel.cs" />
-    <Compile Include="Network\IClient.cs" />
-    <Compile Include="Network\RfcommClient.cs" />
-    <Compile Include="Network\UdpClient.cs" />
+    <Compile Include="Clients\IClient.cs" />
+    <Compile Include="Clients\RfcommClient.cs" />
+    <Compile Include="Clients\UdpClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Servers\CameraServer.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

@@ -1,30 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Windows.Devices.Bluetooth;
-using Windows.Devices.Enumeration;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using Windows.UI.Xaml.Shapes;
 using RPiWindows.Controllers;
 using RPiWindows.Models;
-using System.Diagnostics;
-using RPiWindows.Network;
+using Windows.Networking;
+using Windows.Networking.Sockets;
+using RPiWindows.Clients;
+using RPiWindows.Servers;
 
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -37,6 +25,7 @@ namespace RPiWindows
     public sealed partial class MainPage : Page
     {
         private KeyHandler keyHandler;
+        private CameraServer cameraServer;
 
         public MainPage()
         {
@@ -45,10 +34,10 @@ namespace RPiWindows
             Window.Current.CoreWindow.KeyUp += CoreWindow_KeyUp;
 
             keyHandler = new KeyHandler(this);
+            cameraServer = new CameraServer();
 
             MovementController movementController = new MovementController();
             Task.Factory.StartNew(movementController.MonitorForMovement);
-
         }
 
         private void CoreWindow_KeyUp(CoreWindow sender, KeyEventArgs args)
@@ -61,32 +50,18 @@ namespace RPiWindows
             keyHandler.OnKeyPressDown(args.VirtualKey);
         }
 
-        private void btnIpAddress_Click(object sender, RoutedEventArgs e)
+        private async void btnCamera_Click(object sender, RoutedEventArgs e)
         {
-            // Sanitize input
-            string ipAndPort = tbxIpAddress.Text;
-            bool isValid = Regex.IsMatch(ipAndPort, @"[0-9]+(?:\.[0-9]+){3}:[0-9]+$");
-
-            if (isValid)
-            {
-                string ipAddress = ipAndPort.Split(':')[0];
-                string port = ipAndPort.Split(':')[1];
-
-                NetworkModel.Instance.IpAddress = ipAddress;
-                NetworkModel.Instance.Port = port;
-
-                tbkErrorMsg.Visibility = Visibility.Collapsed;
-                tbkIpAddress.Text = ipAndPort;
-            }
-            else
-            {
-                tbkErrorMsg.Visibility = Visibility.Visible;
-            }
+            Debug.WriteLine("Inside btnCamera_Click");
+            StreamSocketListener listener = new StreamSocketListener();
+            
+            listener.ConnectionReceived += Listener_ConnectionReceived;
+            await listener.BindEndpointAsync(new HostName("10.0.0.96"), "8000");
         }
 
-        private void btnCamera_Click(object sender, RoutedEventArgs e)
+        private void Listener_ConnectionReceived(StreamSocketListener sender, StreamSocketListenerConnectionReceivedEventArgs args)
         {
-
+            cameraServer.HandleInputStream(args.Socket.InputStream);
         }
 
         public void ShowForwardGraphic()
