@@ -11,6 +11,7 @@ using RPiWindows.Controllers;
 using RPiWindows.Models;
 using Windows.Networking;
 using Windows.Networking.Sockets;
+using Windows.Storage.Streams;
 using RPiWindows.Clients;
 using RPiWindows.Servers;
 
@@ -54,14 +55,18 @@ namespace RPiWindows
         {
             Debug.WriteLine("Inside btnCamera_Click");
             StreamSocketListener listener = new StreamSocketListener();
-            
+
             listener.ConnectionReceived += Listener_ConnectionReceived;
             await listener.BindEndpointAsync(new HostName("10.0.0.96"), "8000");
+
         }
 
-        private void Listener_ConnectionReceived(StreamSocketListener sender, StreamSocketListenerConnectionReceivedEventArgs args)
+        private async void Listener_ConnectionReceived(StreamSocketListener sender, StreamSocketListenerConnectionReceivedEventArgs args)
         {
-            cameraServer.HandleInputStream(args.Socket.InputStream);
+            using (IInputStream inStream = args.Socket.InputStream)
+            {
+                await cameraServer.HandleInputStream(inStream);
+            }
         }
 
         public void ShowForwardGraphic()
