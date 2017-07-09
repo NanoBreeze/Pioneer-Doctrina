@@ -14,4 +14,4 @@ RPiWindows/[Oo]bj/*
 RPiWindows/project.lock.json
 RPiWindows/*.pfx
 
-.vs/RpiWindows/v14/*
+.vs/RPiWindows/v14/*

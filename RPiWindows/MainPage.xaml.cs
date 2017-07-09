@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Windows.Graphics.Imaging;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -12,6 +15,7 @@ using RPiWindows.Models;
 using Windows.Networking;
 using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
+using Windows.UI.Xaml.Media.Imaging;
 using RPiWindows.Clients;
 using RPiWindows.Servers;
 
@@ -35,10 +39,11 @@ namespace RPiWindows
             Window.Current.CoreWindow.KeyUp += CoreWindow_KeyUp;
 
             keyHandler = new KeyHandler(this);
-            cameraServer = new CameraServer();
+            cameraServer = new CameraServer(UpdateImageAsync); // Not using MVVM here, directly using imperative code to change image source
 
             MovementController movementController = new MovementController();
             Task.Factory.StartNew(movementController.MonitorForMovement);
+
         }
 
         private void CoreWindow_KeyUp(CoreWindow sender, KeyEventArgs args)
@@ -53,7 +58,6 @@ namespace RPiWindows
 
         private async void btnCamera_Click(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("Inside btnCamera_Click");
             StreamSocketListener listener = new StreamSocketListener();
 
             listener.ConnectionReceived += Listener_ConnectionReceived;
@@ -65,8 +69,12 @@ namespace RPiWindows
         {
             using (IInputStream inStream = args.Socket.InputStream)
             {
-                await cameraServer.HandleInputStream(inStream);
+                await cameraServer.HandleIncomingStreamAsync(inStream);
             }
+
+            Debug.WriteLine("About to call Clear...( ");
+            // Incoming stream has ended so remove the image currently set to the image source
+            await ClearCameraImageAsync();
         }
 
         public void ShowForwardGraphic()
@@ -107,6 +115,34 @@ namespace RPiWindows
         public void ShowStopLeftGraphic()
         {
             recLeft.Fill = new SolidColorBrush(Colors.Orange);
+        }
+
+        // Might be called from a non-UI thread. I know, this is bad coding management
+        public async void UpdateImageAsync(IBuffer imageBuffer)
+        {
+            await imgCamera.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                    var memStream = new MemoryStream(imageBuffer.ToArray());
+
+                    IRandomAccessStream r = memStream.AsRandomAccessStream();
+                    BitmapImage image = new BitmapImage(); // Can optimize to not instantiate this every time
+                    await image.SetSourceAsync(r);
+
+                    imgCamera.Source = image;
+                CameraModel.Instance.ImageDisplayedFromBufferCounter++;
+            });
+        }
+
+        // Same as UpdateImageAsync. Called from non-UI thread
+        public async Task ClearCameraImageAsync()
+        {
+            Debug.WriteLine("Inside Clear");
+            await imgCamera.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                while (CameraModel.Instance.ConvertStreamToBufferCounter != CameraModel.Instance.ImageDisplayedFromBufferCounter) { }
+                imgCamera.Source = null;
+            });
+            
         }
 
         private bool IsValidIpAndPort(string ipAndPort)
