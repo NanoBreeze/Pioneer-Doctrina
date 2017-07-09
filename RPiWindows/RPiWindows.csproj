@@ -96,6 +96,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controllers\CameraController.cs" />
+    <Compile Include="DispatcherTaskExtensions.cs" />
     <Compile Include="KeyHandler.cs" />
     <Compile Include="Controllers\MovementController.cs" />
     <Compile Include="MainPage.xaml.cs">

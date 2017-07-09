@@ -19,9 +19,9 @@ namespace RPiWindows.Servers
         private const int ONE_MEGABYTE = 1000000;
         private byte[] lengthBuffer; // For optimization to avoid creating one every time
         private IBuffer imageBuffer; // For optimization to avoid creating one every time
-        private Action<IBuffer> updateImageCallback;
+        private Func<byte[], Task> updateImageCallback;
 
-        public CameraServer(Action<IBuffer> updateImageCallback)
+        public CameraServer(Func<byte[], Task> updateImageCallback)
         {
             this.updateImageCallback = updateImageCallback;
             lengthBuffer = new byte[4];
@@ -41,7 +41,8 @@ namespace RPiWindows.Servers
                 }
                 CameraModel.Instance.ConvertStreamToBufferCounter++;
 
-                updateImageCallback(imageBuffer); // I think adding an await here would cause updating the image to be slower (since we have to wait for display before reading stream again)
+                await updateImageCallback(imageBuffer.ToArray());
+                // I think adding an await here would cause updating the image to be slower (since we have to wait for display before reading stream again)
                 // Check out CameraModel.cs for comments about resolving potential threading issue that this introduced
             }
         }
@@ -58,7 +59,6 @@ namespace RPiWindows.Servers
             UInt32 imageLength = Convert.ToUInt32(
                 (lengthBuffer[0] << 24 | lengthBuffer[1] << 16 | lengthBuffer[2] << 8 | lengthBuffer[3]));
 
-            Debug.WriteLine("The value of imageLength is: " + Convert.ToString(imageLength));
             if (imageLength > 0)
             {
                 await inputStream.ReadAsync(imageBuffer, imageLength, InputStreamOptions.None);

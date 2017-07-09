@@ -118,31 +118,35 @@ namespace RPiWindows
         }
 
         // Might be called from a non-UI thread. I know, this is bad coding management
-        public async void UpdateImageAsync(IBuffer imageBuffer)
+        public async Task UpdateImageAsync(byte[] imageBuffer)
         {
-            await imgCamera.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            await imgCamera.Dispatcher.RunTaskAsync( async () =>
             {
-                    var memStream = new MemoryStream(imageBuffer.ToArray());
+                var memStream = new MemoryStream(imageBuffer);
 
-                    IRandomAccessStream r = memStream.AsRandomAccessStream();
-                    BitmapImage image = new BitmapImage(); // Can optimize to not instantiate this every time
-                    await image.SetSourceAsync(r);
+                IRandomAccessStream r = memStream.AsRandomAccessStream();
+                BitmapImage image = new BitmapImage(); // Can optimize to not instantiate this every time
 
-                    imgCamera.Source = image;
-                CameraModel.Instance.ImageDisplayedFromBufferCounter++;
+                await image.SetSourceAsync(r);
+
+                imgCamera.Source = image;
+                Debug.WriteLine(DateTime.Now.Ticks);
             });
+
         }
 
         // Same as UpdateImageAsync. Called from non-UI thread
         public async Task ClearCameraImageAsync()
         {
-            Debug.WriteLine("Inside Clear");
+            //while (CameraModel.Instance.ConvertStreamToBufferCounter != CameraModel.Instance.ImageDisplayedFromBufferCounter) { }
+            //Debug.WriteLine("Just passed barrier " + CameraModel.Instance.ConvertStreamToBufferCounter);
+            //Debug.WriteLine("Just passed barrier: " + CameraModel.Instance.ImageDisplayedFromBufferCounter);
             await imgCamera.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                while (CameraModel.Instance.ConvertStreamToBufferCounter != CameraModel.Instance.ImageDisplayedFromBufferCounter) { }
                 imgCamera.Source = null;
+                Debug.WriteLine("Final: " + DateTime.Now.Ticks);
             });
-            
+
         }
 
         private bool IsValidIpAndPort(string ipAndPort)
