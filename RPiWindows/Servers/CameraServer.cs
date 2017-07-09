@@ -19,9 +19,9 @@ namespace RPiWindows.Servers
         private const int ONE_MEGABYTE = 1000000;
         private byte[] lengthBuffer; // For optimization to avoid creating one every time
         private IBuffer imageBuffer; // For optimization to avoid creating one every time
-        private Func<byte[], Task> updateImageCallback;
+        private Action<byte[]> updateImageCallback;
 
-        public CameraServer(Func<byte[], Task> updateImageCallback)
+        public CameraServer(Action<byte[]> updateImageCallback)
         {
             this.updateImageCallback = updateImageCallback;
             lengthBuffer = new byte[4];
@@ -39,9 +39,9 @@ namespace RPiWindows.Servers
                 {
                     return;
                 }
-                CameraModel.Instance.ConvertStreamToBufferCounter++;
 
-                await updateImageCallback(imageBuffer.ToArray());
+                CameraModel.Instance.ConvertStreamToBufferCounter++;
+                updateImageCallback(imageBuffer.ToArray());
                 // I think adding an await here would cause updating the image to be slower (since we have to wait for display before reading stream again)
                 // Check out CameraModel.cs for comments about resolving potential threading issue that this introduced
             }

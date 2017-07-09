@@ -118,9 +118,9 @@ namespace RPiWindows
         }
 
         // Might be called from a non-UI thread. I know, this is bad coding management
-        public async Task UpdateImageAsync(byte[] imageBuffer)
+        public async void UpdateImageAsync(byte[] imageBuffer)
         {
-            await imgCamera.Dispatcher.RunTaskAsync( async () =>
+            await imgCamera.Dispatcher.RunAsync( CoreDispatcherPriority.Normal,  async () =>
             {
                 var memStream = new MemoryStream(imageBuffer);
 
@@ -131,6 +131,7 @@ namespace RPiWindows
 
                 imgCamera.Source = image;
                 Debug.WriteLine(DateTime.Now.Ticks);
+                CameraModel.Instance.ImageDisplayedFromBufferCounter++;
             });
 
         }
@@ -138,15 +139,13 @@ namespace RPiWindows
         // Same as UpdateImageAsync. Called from non-UI thread
         public async Task ClearCameraImageAsync()
         {
-            //while (CameraModel.Instance.ConvertStreamToBufferCounter != CameraModel.Instance.ImageDisplayedFromBufferCounter) { }
-            //Debug.WriteLine("Just passed barrier " + CameraModel.Instance.ConvertStreamToBufferCounter);
-            //Debug.WriteLine("Just passed barrier: " + CameraModel.Instance.ImageDisplayedFromBufferCounter);
+            while (CameraModel.Instance.ConvertStreamToBufferCounter != CameraModel.Instance.ImageDisplayedFromBufferCounter) { }
+
             await imgCamera.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 imgCamera.Source = null;
                 Debug.WriteLine("Final: " + DateTime.Now.Ticks);
             });
-
         }
 
         private bool IsValidIpAndPort(string ipAndPort)
