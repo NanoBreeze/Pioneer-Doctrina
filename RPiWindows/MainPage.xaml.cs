@@ -14,6 +14,7 @@ using RPiWindows.Controllers;
 using RPiWindows.Models;
 using Windows.Networking;
 using Windows.Networking.Sockets;
+using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Media.Imaging;
 using RPiWindows.Clients;
@@ -32,6 +33,11 @@ namespace RPiWindows
         private KeyHandler keyHandler;
         private CameraServer cameraServer;
 
+        const string SELF_IP_ADDRESS = "10.0.0.96";
+        const string SELF_CAMERA_PORT = "8000";
+
+        const string REMOTE_RFCOMM_IP_ADDRESS = "127.0.0.1";
+        const string REMOTE_RFCOMM_PORT = "10001";
         public MainPage()
         {
             this.InitializeComponent();
@@ -43,6 +49,10 @@ namespace RPiWindows
 
             MovementController movementController = new MovementController();
             Task.Factory.StartNew(movementController.MonitorForMovement);
+
+            StreamSocketListener listener = new StreamSocketListener();
+            listener.BindEndpointAsync(new HostName(SELF_IP_ADDRESS), SELF_CAMERA_PORT); // It's okay to not use await here because we can register an event handler before the endpoint is bounded
+            listener.ConnectionReceived += Listener_ConnectionReceived;
 
         }
 
@@ -58,11 +68,9 @@ namespace RPiWindows
 
         private async void btnCamera_Click(object sender, RoutedEventArgs e)
         {
-            StreamSocketListener listener = new StreamSocketListener();
-
-            listener.ConnectionReceived += Listener_ConnectionReceived;
-            await listener.BindEndpointAsync(new HostName("10.0.0.96"), "8000");
-
+            await
+                cameraServer.SaveImageAsync("imageNameHere.jpeg", KnownFolders.PicturesLibrary,
+                    CameraModel.Instance.ImageBytes);
         }
 
         private async void Listener_ConnectionReceived(StreamSocketListener sender, StreamSocketListenerConnectionReceivedEventArgs args)
@@ -72,9 +80,7 @@ namespace RPiWindows
                 await cameraServer.HandleIncomingStreamAsync(inStream);
             }
 
-            Debug.WriteLine("About to call Clear...( ");
-            // Incoming stream has ended so remove the image currently set to the image source
-            await ClearCameraImageAsync();
+            await ClearCameraImageAsync(); // Incoming stream has ended so remove the image currently set to the image source
         }
 
         public void ShowForwardGraphic()
@@ -184,8 +190,8 @@ namespace RPiWindows
             btnUseRFCOMM.Background = new SolidColorBrush(Colors.Green);
             btnUseTCP.Background = new SolidColorBrush(Colors.Orange);
 
-            NetworkModel.Instance.IpAddress = "127.0.0.1";
-            NetworkModel.Instance.Port = "10001";
+            NetworkModel.Instance.IpAddress = REMOTE_RFCOMM_IP_ADDRESS;
+            NetworkModel.Instance.Port = REMOTE_RFCOMM_PORT;
             NetworkModel.Instance.NetworkClient = new RfcommClient(); // Why create new instance each time? Can optimize to not create new instance
         }
     }

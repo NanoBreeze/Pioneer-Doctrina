@@ -57,5 +57,7 @@ namespace RPiWindows.Models
 
         public int ConvertStreamToBufferCounter { get; set; }
         public int ImageDisplayedFromBufferCounter { get; set; }
+
+        public byte[] ImageBytes { get; set; }
     }
 }

@@ -15,17 +15,14 @@ namespace RPiWindows.Servers
 {
     class CameraServer
     {
-        private static int i = 0;
-        private const int ONE_MEGABYTE = 1000000;
-        private byte[] lengthBuffer; // For optimization to avoid creating one every time
-        private IBuffer imageBuffer; // For optimization to avoid creating one every time
+        private static byte[] lengthBuffer; // For optimization to avoid creating one every time
+        private byte[] imageBytes; // For optimization to avoid creating one every time
         private Action<byte[]> updateImageCallback;
 
         public CameraServer(Action<byte[]> updateImageCallback)
         {
             this.updateImageCallback = updateImageCallback;
             lengthBuffer = new byte[4];
-            imageBuffer = new Windows.Storage.Streams.Buffer(ONE_MEGABYTE); // Don't expect to ever be 1MB but this is the upper limit
         }
 
 
@@ -33,21 +30,22 @@ namespace RPiWindows.Servers
         {
             while (true)
             {
-                IBuffer imageBuffer = await ConvertStreamToBufferAsync(inputStream);
+                imageBytes = await ConvertStreamToByteArrayAsync(inputStream);
 
-                if (imageBuffer == null || imageBuffer.Length == 0)
+                if (imageBytes == null)
                 {
                     return;
                 }
 
+                CameraModel.Instance.ImageBytes = (byte[]) imageBytes.Clone();
                 CameraModel.Instance.ConvertStreamToBufferCounter++;
-                updateImageCallback(imageBuffer.ToArray());
-                // I think adding an await here would cause updating the image to be slower (since we have to wait for display before reading stream again)
+                updateImageCallback((byte[])imageBytes.Clone()); // we use clone to avoid using same address, lest it be overriden by next round before the bytes are used
+                // Adding await here along with extension method to await Run(Task)Async would cause updating the image to be slower (since we have to wait for display before reading stream again)
                 // Check out CameraModel.cs for comments about resolving potential threading issue that this introduced
             }
         }
 
-        private async Task<IBuffer> ConvertStreamToBufferAsync(IInputStream inputStream)
+        private async Task<byte[]> ConvertStreamToByteArrayAsync(IInputStream inputStream)
         {
             // Don't expect to ever be 1MB but this is the upper limit Block until we get all the data
             await
@@ -58,33 +56,22 @@ namespace RPiWindows.Servers
             // The camera client uses big endian so here, we will use bit operations to get the data
             UInt32 imageLength = Convert.ToUInt32(
                 (lengthBuffer[0] << 24 | lengthBuffer[1] << 16 | lengthBuffer[2] << 8 | lengthBuffer[3]));
-
-            if (imageLength > 0)
+            imageBytes = new byte[imageLength];
+            if (imageLength > 0 && imageLength < 1000000) // If client suddenly stops, the data it sends is corrupted. Crude way of checking for corrpution
             {
-                await inputStream.ReadAsync(imageBuffer, imageLength, InputStreamOptions.None);
-                return imageBuffer;
-
-                //    StorageFolder folder = KnownFolders.PicturesLibrary;
-                //    if (folder != null)
-                //    {
-                //        StorageFile file =
-                //            await
-                //                folder.CreateFileAsync("newImage" + Convert.ToString(i) + ".jpg",
-                //                    CreationCollisionOption.GenerateUniqueName);
-                //        await FileIO.WriteBufferAsync(file, result);
-                //    }
-                //}
+                await inputStream.ReadAsync(imageBytes.AsBuffer(), imageLength, InputStreamOptions.None);
+                return imageBytes;
             }
             return null;
         }
 
-        public async Task SaveImageAsync(string imageName, StorageFolder folder, IBuffer imageBuffer)
+        public async Task SaveImageAsync(string imageName, StorageFolder folder, byte[] imageBytes)
         {
-            if (imageName != null && folder != null && imageBuffer.Length > 0)
+            if (imageName != null && folder != null && imageBytes.Length > 0)
             {
                 StorageFile file = await
                         folder.CreateFileAsync(imageName, CreationCollisionOption.GenerateUniqueName);
-                await FileIO.WriteBufferAsync(file, imageBuffer);
+                await FileIO.WriteBytesAsync(file, imageBytes);
             }
         }
     }
