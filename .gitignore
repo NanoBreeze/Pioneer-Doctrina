@@ -15,3 +15,10 @@ RPiWindows/project.lock.json
 RPiWindows/*.pfx
 
 .vs/RPiWindows/v14/.suo
+
+# Raspberry Pi
+RPi/*.swp
+RPi/*.bak
+RPi/*.swo
+RPi/*.jpeg
+
