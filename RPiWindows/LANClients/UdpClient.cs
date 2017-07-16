@@ -4,7 +4,7 @@ using System.IO;
 using Windows.Networking;
 using Windows.Networking.Sockets;
 
-namespace RPiWindows.Clients
+namespace RPiWindows.LANClients
 {
     class UdpClient : IClient
     {

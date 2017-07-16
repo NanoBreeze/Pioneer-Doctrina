@@ -1,4 +1,4 @@
-﻿namespace RPiWindows.Clients
+﻿namespace RPiWindows.LANClients
 {
     interface IClient
     {

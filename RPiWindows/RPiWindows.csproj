@@ -103,9 +103,9 @@
     <Compile Include="Models\CameraModel.cs" />
     <Compile Include="Models\MovementModel.cs" />
     <Compile Include="Models\NetworkModel.cs" />
-    <Compile Include="Clients\IClient.cs" />
-    <Compile Include="Clients\RfcommClient.cs" />
-    <Compile Include="Clients\UdpClient.cs" />
+    <Compile Include="LANClients\IClient.cs" />
+    <Compile Include="LANClients\RfcommClient.cs" />
+    <Compile Include="LANClients\UdpClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servers\CameraServer.cs" />
   </ItemGroup>

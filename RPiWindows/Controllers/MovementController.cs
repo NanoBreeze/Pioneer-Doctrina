@@ -1,4 +1,4 @@
-﻿using RPiWindows.Clients;
+﻿using RPiWindows.LANClients;
 using RPiWindows.Models;
 
 namespace RPiWindows.Controllers

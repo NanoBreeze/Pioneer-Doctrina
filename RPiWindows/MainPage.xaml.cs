@@ -17,7 +17,7 @@ using Windows.Networking.Sockets;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Media.Imaging;
-using RPiWindows.Clients;
+using RPiWindows.LANClients;
 using RPiWindows.Servers;
 
 
@@ -69,7 +69,7 @@ namespace RPiWindows
         private async void btnCamera_Click(object sender, RoutedEventArgs e)
         {
             await
-                cameraServer.SaveImageAsync("imageNameHere.jpeg", KnownFolders.PicturesLibrary,
+                cameraServer.SaveImageAsync("PioneerDoctrina_Camera.jpeg", KnownFolders.PicturesLibrary,
                     CameraModel.Instance.ImageBytes);
         }
 

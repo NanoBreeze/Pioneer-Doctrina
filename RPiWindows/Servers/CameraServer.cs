@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Diagnostics;
-using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.Graphics.Imaging;
-using Windows.Media.MediaProperties;
 using Windows.Storage;
 using Windows.Storage.Streams;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
 using RPiWindows.Models;
 
 namespace RPiWindows.Servers
