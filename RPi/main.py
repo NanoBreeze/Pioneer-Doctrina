@@ -7,7 +7,7 @@ from threading import Thread
 from MovementController import MovementController
 from UdpServer import UdpServer
 from BluetoothServer import BluetoothServer
-from Gpio import Gpio
+from Motor import Motor
 
 from CameraClient import CameraClient
 from Camera import Camera
@@ -39,9 +39,8 @@ def startCamera(serverIpAddress, serverPort):
 	camera.captureContinuousStream()
 
 if __name__ == '__main__':
-	print("About to call Gpio()")
-	gpio = Gpio()
-	movementController = MovementController(gpio)
+	motor = Motor()
+	movementController = MovementController(motor)
 
 	udpServerThread = Thread(target=startUdpServer, args=(SELF_IP_ADDRESS, SELF_PORT, movementController,))
 	udpServerThread.start()

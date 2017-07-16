@@ -19,7 +19,7 @@ class CameraController:
 		self.cameraClient.send(imageStream)
 
 	def onTerminateCamera(self):
-		self.cameraClient.send(END_OF_STREAM)
+		self.cameraClient.send(self.END_OF_STREAM)
 		self.cameraClient.closeConnection()
 
 
